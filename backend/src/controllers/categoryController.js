@@ -33,7 +33,7 @@ exports.createCategory = async (req, res) => {
     const { name } = req.body;
     let image = req.body.image || null;
     if (req.file) {
-      image = `/uploads/${req.file.filename}`;
+      image = req.file.path;
     }
     const category = await Category.create({ name, image });
     res.status(201).json({ success: true, data: category });
@@ -48,7 +48,7 @@ exports.updateCategory = async (req, res) => {
     const { name } = req.body;
     let updateData = { name };
     if (req.file) {
-      updateData.image = `/uploads/${req.file.filename}`;
+      updateData.image = req.file.path;
     } else if (req.body.image !== undefined) {
       updateData.image = req.body.image;
     }

@@ -36,7 +36,7 @@ exports.createFood = async (req, res) => {
 
     let image = req.body.image || null;
     if (req.file) {
-      image = `/uploads/${req.file.filename}`;
+      image = req.file.path;
     }
     const food = await Food.create({ name, description, referencePrice, image });
     if (categoryIds && categoryIds.length > 0) {
@@ -60,7 +60,7 @@ exports.updateFood = async (req, res) => {
 
     let image = req.body.image;
     if (req.file) {
-      image = `/uploads/${req.file.filename}`;
+      image = req.file.path;
     }
     
     const food = await Food.findByPk(id);

@@ -11,7 +11,7 @@ exports.markAsEaten = async (req, res) => {
 
     let imagePath = null;
     if (req.file) {
-      imagePath = `/uploads/${req.file.filename}`;
+      imagePath = req.file.path;
     }
 
     const newHistory = await EatHistory.create({
