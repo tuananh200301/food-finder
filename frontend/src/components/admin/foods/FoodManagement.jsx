@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../../services/api';
 import FoodFormModal from './FoodFormModal';
 
 const FoodManagement = () => {
@@ -12,7 +12,7 @@ const FoodManagement = () => {
 
   const fetchFoods = async () => {
     try {
-      const res = await axios.get('/api/foods');
+      const res = await api.get('/api/foods');
       if (res.data.success) {
         setFoods(res.data.data);
       }
@@ -54,7 +54,7 @@ const FoodManagement = () => {
   const handleDelete = async (id) => {
     if (!window.confirm('Xóa món ăn này?')) return;
     try {
-      await axios.delete(`/api/foods/${id}`);
+      await api.delete(`/api/foods/${id}`);
       setFoods(foods.filter(f => f.id !== id));
     } catch (err) {
       alert('Lỗi xóa món ăn');

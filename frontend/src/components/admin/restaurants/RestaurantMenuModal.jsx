@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../../services/api';
 
 const RestaurantMenuModal = ({ restaurant, onClose }) => {
   const [menu, setMenu] = useState([]);
@@ -12,8 +12,8 @@ const RestaurantMenuModal = ({ restaurant, onClose }) => {
   const fetchMenuAndFoods = async () => {
     try {
       const [resRest, resFoods] = await Promise.all([
-        axios.get(`/api/restaurants/${restaurant.id}`),
-        axios.get('/api/foods')
+        api.get(`/api/restaurants/${restaurant.id}`),
+        api.get('/api/foods')
       ]);
       
       if (resRest.data.success) {
@@ -39,7 +39,7 @@ const RestaurantMenuModal = ({ restaurant, onClose }) => {
     if (!selectedFoodId || !price) return alert('Vui lòng chọn món và nhập giá');
     
     try {
-      const res = await axios.post(`/api/restaurants/${restaurant.id}/menu`, {
+      const res = await api.post(`/api/restaurants/${restaurant.id}/menu`, {
         foodId: selectedFoodId,
         price: parseInt(price)
       });
@@ -56,7 +56,7 @@ const RestaurantMenuModal = ({ restaurant, onClose }) => {
   const handleRemoveFood = async (foodId) => {
     if (!window.confirm('Xóa món này khỏi thực đơn của quán?')) return;
     try {
-      await axios.delete(`/api/restaurants/${restaurant.id}/menu/${foodId}`);
+      await api.delete(`/api/restaurants/${restaurant.id}/menu/${foodId}`);
       fetchMenuAndFoods();
     } catch (err) {
       alert('Lỗi xóa món khỏi thực đơn');

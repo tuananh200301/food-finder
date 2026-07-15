@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../services/api';
 
 const CategoryFoods = () => {
   const { id } = useParams();
@@ -12,7 +12,7 @@ const CategoryFoods = () => {
   useEffect(() => {
     const fetchCategoryFoods = async () => {
       try {
-        const res = await axios.get(`/api/categories/${id}`);
+        const res = await api.get(`/api/categories/${id}`);
         if (res.data.success) {
           setCategory(res.data.data);
         } else {

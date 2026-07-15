@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import CreateAdminModal from './CreateAdminModal';
 import ResetPasswordModal from './ResetPasswordModal';
 
@@ -17,7 +17,7 @@ const UserManagement = ({ user: currentUser, type }) => {
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/users`, {
+      const response = await api.get(`/api/users`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (response.data.success) {
@@ -44,7 +44,7 @@ const UserManagement = ({ user: currentUser, type }) => {
   const handleSaveRole = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`${import.meta.env.VITE_API_URL}/api/users/${id}`, { role: editRole }, {
+      await api.put(`/api/users/${id}`, { role: editRole }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -65,7 +65,7 @@ const UserManagement = ({ user: currentUser, type }) => {
     
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`${import.meta.env.VITE_API_URL}/api/users/${id}`, {
+      await api.delete(`/api/users/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setUsers(users.filter(u => u.id !== id));

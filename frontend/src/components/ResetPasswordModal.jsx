@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 
 const ResetPasswordModal = ({ user, onClose }) => {
   const [newPassword, setNewPassword] = useState('');
@@ -15,7 +15,7 @@ const ResetPasswordModal = ({ user, onClose }) => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.put(`${import.meta.env.VITE_API_URL}/api/users/${user.id}/reset-password`, {
+      const response = await api.put(`/api/users/${user.id}/reset-password`, {
         newPassword
       }, {
         headers: { Authorization: `Bearer ${token}` }

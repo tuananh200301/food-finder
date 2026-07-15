@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../../../services/api';
 
 const RestaurantFormModal = ({ restaurant, onClose, onSuccess }) => {
   const isEdit = !!restaurant;
@@ -31,9 +31,9 @@ const RestaurantFormModal = ({ restaurant, onClose, onSuccess }) => {
     try {
       let res;
       if (isEdit) {
-        res = await axios.put(`/api/restaurants/${restaurant.id}`, formData);
+        res = await api.put(`/api/restaurants/${restaurant.id}`, formData);
       } else {
-        res = await axios.post('/api/restaurants', formData);
+        res = await api.post('/api/restaurants', formData);
       }
       
       if (res.data.success) {

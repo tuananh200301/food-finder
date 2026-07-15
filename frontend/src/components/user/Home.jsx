@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../services/api';
 
 const Home = () => {
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('/api/categories')
+    api.get('/api/categories')
       .then(res => setCategories(res.data?.data || []))
       .catch(err => console.error(err));
   }, []);

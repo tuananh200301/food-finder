@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../services/api';
 
 const UserHistory = () => {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ const UserHistory = () => {
         if (filterDate) {
           url += `?date=${filterDate}`;
         }
-        const res = await axios.get(url);
+        const res = await api.get(url);
         if (res.data.success) {
           setHistories(res.data.data);
         } else {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../../services/api';
 import RestaurantFormModal from './RestaurantFormModal';
 import RestaurantMenuModal from './RestaurantMenuModal';
 
@@ -16,7 +16,7 @@ const RestaurantManagement = () => {
 
   const fetchRestaurants = async () => {
     try {
-      const res = await axios.get('/api/restaurants');
+      const res = await api.get('/api/restaurants');
       if (res.data.success) {
         setRestaurants(res.data.data);
       }
@@ -63,7 +63,7 @@ const RestaurantManagement = () => {
   const handleDelete = async (id) => {
     if (!window.confirm('Xóa quán ăn này? Toàn bộ thực đơn của quán cũng sẽ bị xóa theo!')) return;
     try {
-      await axios.delete(`/api/restaurants/${id}`);
+      await api.delete(`/api/restaurants/${id}`);
       setRestaurants(restaurants.filter(r => r.id !== id));
     } catch (err) {
       alert('Lỗi xóa quán ăn');

@@ -1,5 +1,5 @@
 import { GoogleLogin } from '@react-oauth/google';
-import axios from 'axios';
+import api from '../services/api';
 import { useState } from 'react';
 
 const Login = ({ setUser }) => {
@@ -26,7 +26,7 @@ const Login = ({ setUser }) => {
         ? { email: formData.email, password: formData.password }
         : formData;
 
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}${endpoint}`, payload);
+      const res = await api.post(endpoint, payload);
 
       if (res.data.success) {
         localStorage.setItem('token', res.data.token);
@@ -41,7 +41,7 @@ const Login = ({ setUser }) => {
 
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/google`, {
+      const res = await api.post(`/api/auth/google`, {
         token: credentialResponse.credential
       });
 

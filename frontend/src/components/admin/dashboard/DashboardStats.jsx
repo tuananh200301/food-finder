@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../../services/api';
 
 const DashboardStats = () => {
   const [stats, setStats] = useState(null);
 
   useEffect(() => {
     // Fetch stats
-    axios.get('/api/misc/stats')
+    api.get('/api/misc/stats')
       .then(res => setStats(res.data.data))
       .catch(err => console.error(err));
   }, []);

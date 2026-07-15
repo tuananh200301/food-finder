@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 
 const ChangePasswordModal = ({ onClose }) => {
   const [oldPassword, setOldPassword] = useState('');
@@ -22,7 +22,7 @@ const ChangePasswordModal = ({ onClose }) => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.put(`${import.meta.env.VITE_API_URL}/api/users/change-my-password`, {
+      const response = await api.put(`/api/users/change-my-password`, {
         oldPassword,
         newPassword
       }, {

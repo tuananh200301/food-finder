@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../../services/api';
 
 const FoodFormModal = ({ food, onClose, onSuccess }) => {
   const isEdit = !!food;
@@ -18,7 +18,7 @@ const FoodFormModal = ({ food, onClose, onSuccess }) => {
 
   useEffect(() => {
     // Fetch categories for the checkbox list
-    axios.get('/api/categories')
+    api.get('/api/categories')
       .then(res => setCategories(res.data?.data || []))
       .catch(err => console.error('Lỗi tải danh mục', err));
   }, []);
@@ -68,9 +68,9 @@ const FoodFormModal = ({ food, onClose, onSuccess }) => {
 
       let res;
       if (isEdit) {
-        res = await axios.put(`/api/foods/${food.id}`, submitData, { headers: { 'Content-Type': 'multipart/form-data' } });
+        res = await api.put(`/api/foods/${food.id}`, submitData, { headers: { 'Content-Type': 'multipart/form-data' } });
       } else {
-        res = await axios.post('/api/foods', submitData, { headers: { 'Content-Type': 'multipart/form-data' } });
+        res = await api.post('/api/foods', submitData, { headers: { 'Content-Type': 'multipart/form-data' } });
       }
       
       if (res.data.success) {

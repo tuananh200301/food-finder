@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../services/api';
 import MarkEatenModal from './MarkEatenModal';
 
 const FoodDetail = () => {
@@ -21,7 +21,7 @@ const FoodDetail = () => {
 
   const fetchFoodDetails = async () => {
     try {
-      const res = await axios.get(`/api/foods/${id}`);
+      const res = await api.get(`/api/foods/${id}`);
       if (res.data.success) {
         setFood(res.data.data);
       } else {
@@ -36,7 +36,7 @@ const FoodDetail = () => {
   const fetchUserHistory = async () => {
     if (!user) return;
     try {
-      const res = await axios.get(`/api/history/user/${user.id}?foodId=${id}`);
+      const res = await api.get(`/api/history/user/${user.id}?foodId=${id}`);
       if (res.data.success) {
         setHistory(res.data.data);
       }
@@ -76,7 +76,7 @@ const FoodDetail = () => {
         formData.append('image', image);
       }
 
-      const res = await axios.post('/api/history', formData, {
+      const res = await api.post('/api/history', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       if (res.data.success) {

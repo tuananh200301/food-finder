@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../../services/api';
 import CreateCategoryModal from './CategoryFormModal';
 
 const CategoryManagement = () => {
@@ -13,7 +13,7 @@ const CategoryManagement = () => {
 
   const fetchCategories = async () => {
     try {
-      const res = await axios.get('/api/categories');
+      const res = await api.get('/api/categories');
       if (res.data.success) {
         setCategories(res.data.data);
       }
@@ -45,7 +45,7 @@ const CategoryManagement = () => {
   const handleDelete = async (id) => {
     if (!window.confirm('Xóa danh mục này?')) return;
     try {
-      await axios.delete(`/api/categories/${id}`);
+      await api.delete(`/api/categories/${id}`);
       setCategories(categories.filter(c => c.id !== id));
     } catch (err) {
       alert('Lỗi xóa danh mục');

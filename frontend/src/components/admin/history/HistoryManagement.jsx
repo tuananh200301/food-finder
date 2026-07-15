@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../../services/api';
 
 const HistoryManagement = () => {
   const [histories, setHistories] = useState([]);
@@ -9,7 +9,7 @@ const HistoryManagement = () => {
   const fetchHistories = async () => {
     try {
       setLoading(true);
-      const res = await axios.get('/api/history/admin');
+      const res = await api.get('/api/history/admin');
       if (res.data.success) {
         setHistories(res.data.data);
       } else {

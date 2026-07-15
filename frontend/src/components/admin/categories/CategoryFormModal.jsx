@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../../../services/api';
 
 const CategoryFormModal = ({ category, onClose, onSuccess }) => {
   const isEdit = !!category;
@@ -40,11 +40,11 @@ const CategoryFormModal = ({ category, onClose, onSuccess }) => {
 
       let res;
       if (isEdit) {
-        res = await axios.put(`/api/categories/${category.id}`, formData, {
+        res = await api.put(`/api/categories/${category.id}`, formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
       } else {
-        res = await axios.post('/api/categories', formData, {
+        res = await api.post('/api/categories', formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
       }

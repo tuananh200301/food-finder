@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 
 const Randomizer = () => {
   const [suggestion, setSuggestion] = useState(null);
@@ -21,7 +21,7 @@ const Randomizer = () => {
 
     try {
       const params = new URLSearchParams(criteria).toString();
-      const res = await axios.get(`/api/food-finder/random?${params}`);
+      const res = await api.get(`/api/food-finder/random?${params}`);
       
       if (res.data.success) {
         setSuggestion(res.data.data);
