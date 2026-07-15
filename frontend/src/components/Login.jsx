@@ -26,7 +26,7 @@ const Login = ({ setUser }) => {
         ? { email: formData.email, password: formData.password }
         : formData;
 
-      const res = await axios.post(`http://localhost:5000${endpoint}`, payload);
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}${endpoint}`, payload);
 
       if (res.data.success) {
         localStorage.setItem('token', res.data.token);
@@ -41,7 +41,7 @@ const Login = ({ setUser }) => {
 
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/google', {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/google`, {
         token: credentialResponse.credential
       });
 

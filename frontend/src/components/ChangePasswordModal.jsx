@@ -22,7 +22,7 @@ const ChangePasswordModal = ({ onClose }) => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.put('http://localhost:5000/api/users/change-my-password', {
+      const response = await axios.put(`${import.meta.env.VITE_API_URL}/api/users/change-my-password`, {
         oldPassword,
         newPassword
       }, {
