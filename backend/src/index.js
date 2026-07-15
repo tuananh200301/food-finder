@@ -34,7 +34,8 @@ const startServer = async () => {
     
     // Sync models (tạo bảng nếu chưa có)
     // Lưu ý: Trong môi trường production, thường dùng migrations (vd: Sequelize CLI) thay vì sync
-    await sequelize.sync({ alter: true });
+    // await sequelize.sync({ alter: true });
+    await sequelize.sync();
     console.log('Database synced');
 
     app.listen(PORT, () => {
