@@ -38,6 +38,10 @@ const startServer = async () => {
     await sequelize.sync();
     console.log('Database synced');
 
+    // Tự động tạo admin nếu chưa có
+    const { initAdmin } = require('./controllers/authController');
+    await initAdmin();
+
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });

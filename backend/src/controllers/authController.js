@@ -122,7 +122,7 @@ const login = async (req, res) => {
   }
 };
 
-const setupAdmin = async (req, res) => {
+const initAdmin = async () => {
   try {
     const adminEmail = 'admin@gmail.com';
     const adminPassword = 'admin123';
@@ -130,7 +130,8 @@ const setupAdmin = async (req, res) => {
     let user = await User.findOne({ where: { email: adminEmail } });
     
     if (user) {
-      return res.status(200).json({ success: true, message: 'Tài khoản admin đã tồn tại', user });
+      console.log('Tài khoản admin đã tồn tại');
+      return;
     }
 
     const hashedPassword = await bcrypt.hash(adminPassword, 10);
@@ -142,9 +143,17 @@ const setupAdmin = async (req, res) => {
       avatar: 'https://ui-avatars.com/api/?name=Admin&background=random'
     });
 
-    res.status(201).json({ success: true, message: 'Đã tạo tài khoản admin', user });
+    console.log('Đã tạo tài khoản admin thành công');
   } catch (error) {
-    console.error("Setup admin error:", error);
+    console.error("Lỗi khi tạo admin tự động:", error);
+  }
+};
+
+const setupAdmin = async (req, res) => {
+  try {
+    await initAdmin();
+    res.status(200).json({ success: true, message: 'Đã kiểm tra và thiết lập tài khoản admin' });
+  } catch (error) {
     res.status(500).json({ success: false, message: 'Lỗi khi tạo admin' });
   }
 };
@@ -153,5 +162,6 @@ module.exports = {
   googleLogin,
   register,
   login,
-  setupAdmin
+  setupAdmin,
+  initAdmin
 };
