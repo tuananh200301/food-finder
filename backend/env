@@ -1,0 +1,11 @@
+PORT=4000
+# MySQL
+DB_HOST=gateway01.ap-southeast-1.prod.aws.tidbcloud.com
+DB_USER=3igC2icEh9AB8th.root
+DB_PASSWORD=
+DB_NAME=food_finder
+
+# JWT Secret
+JWT_SECRET=super_secret_key_basejs_123
+
+# Google Client ID
