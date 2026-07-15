@@ -12,6 +12,7 @@ const AdminLayout = ({ user, handleLogout }) => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     if (location.pathname === '/users' || location.pathname === '/admins') {
@@ -33,33 +34,38 @@ const AdminLayout = ({ user, handleLogout }) => {
 
   return (
     <div className="dashboard-layout">
-      <aside className="sidebar">
+      {/* Overlay for mobile sidebar */}
+      {isSidebarOpen && (
+        <div className="sidebar-overlay" onClick={() => setIsSidebarOpen(false)}></div>
+      )}
+      
+      <aside className={`sidebar ${isSidebarOpen ? 'is-open' : ''}`}>
         <div className="sidebar-brand">
           <h2>Admin<span className="brand-highlight">Pro</span></h2>
         </div>
         
         <nav className="sidebar-nav">
-          <Link to="/" className={`nav-item ${location.pathname === '/' ? 'active' : ''}`}>
+          <Link to="/" onClick={() => setIsSidebarOpen(false)} className={`nav-item ${location.pathname === '/' ? 'active' : ''}`}>
             <span className="nav-icon">📊</span>
             Dashboard
           </Link>
 
-          <Link to="/categories" className={`nav-item ${location.pathname === '/categories' ? 'active' : ''}`}>
+          <Link to="/categories" onClick={() => setIsSidebarOpen(false)} className={`nav-item ${location.pathname === '/categories' ? 'active' : ''}`}>
             <span className="nav-icon">📁</span>
             QL Danh mục
           </Link>
 
-          <Link to="/foods" className={`nav-item ${location.pathname === '/foods' ? 'active' : ''}`}>
+          <Link to="/foods" onClick={() => setIsSidebarOpen(false)} className={`nav-item ${location.pathname === '/foods' ? 'active' : ''}`}>
             <span className="nav-icon">🍔</span>
             QL Món ăn
           </Link>
 
-          <Link to="/restaurants" className={`nav-item ${location.pathname === '/restaurants' ? 'active' : ''}`}>
+          <Link to="/restaurants" onClick={() => setIsSidebarOpen(false)} className={`nav-item ${location.pathname === '/restaurants' ? 'active' : ''}`}>
             <span className="nav-icon">🏪</span>
             QL Quán ăn
           </Link>
 
-          <Link to="/history" className={`nav-item ${location.pathname === '/history' ? 'active' : ''}`}>
+          <Link to="/history" onClick={() => setIsSidebarOpen(false)} className={`nav-item ${location.pathname === '/history' ? 'active' : ''}`}>
             <span className="nav-icon">🕒</span>
             Lịch sử ăn uống
           </Link>
@@ -77,10 +83,10 @@ const AdminLayout = ({ user, handleLogout }) => {
             
             {isMenuOpen && (
               <div className="sub-menu">
-                <Link to="/admins" className={`sub-nav-item ${location.pathname === '/admins' ? 'active' : ''}`}>
+                <Link to="/admins" onClick={() => setIsSidebarOpen(false)} className={`sub-nav-item ${location.pathname === '/admins' ? 'active' : ''}`}>
                   Quản lý Admin
                 </Link>
-                <Link to="/users" className={`sub-nav-item ${location.pathname === '/users' ? 'active' : ''}`}>
+                <Link to="/users" onClick={() => setIsSidebarOpen(false)} className={`sub-nav-item ${location.pathname === '/users' ? 'active' : ''}`}>
                   Quản lý User
                 </Link>
               </div>
@@ -102,7 +108,15 @@ const AdminLayout = ({ user, handleLogout }) => {
 
       <main className="main-content">
         <header className="topbar">
-          <h2>{getPageTitle()}</h2>
+          <div className="topbar-left">
+            <button 
+              className="hamburger-btn" 
+              onClick={() => setIsSidebarOpen(true)}
+            >
+              ☰
+            </button>
+            <h2>{getPageTitle()}</h2>
+          </div>
           <div className="topbar-right">
             <span className="welcome-text">Xin chào, {user.name}!</span>
           </div>
