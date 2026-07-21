@@ -64,7 +64,7 @@ const FoodDetail = () => {
     setActiveRestaurantId(restaurantId);
   };
 
-  const handleMarkEatenSubmit = async ({ note, image }) => {
+  const handleMarkEatenSubmit = async ({ note, image, eatenAt }) => {
     setIsSubmitting(true);
     try {
       const formData = new FormData();
@@ -72,6 +72,9 @@ const FoodDetail = () => {
       formData.append('foodId', food.id);
       formData.append('restaurantId', activeRestaurantId);
       formData.append('note', note);
+      if (eatenAt) {
+        formData.append('eatenAt', eatenAt);
+      }
       if (image) {
         formData.append('image', image);
       }

@@ -4,6 +4,10 @@ const MarkEatenModal = ({ onClose, onSubmit, isSubmitting }) => {
   const [note, setNote] = useState('');
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
+  
+  // Mặc định là ngày hôm nay
+  const today = new Date().toISOString().split('T')[0];
+  const [eatenAt, setEatenAt] = useState(today);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -19,7 +23,7 @@ const MarkEatenModal = ({ onClose, onSubmit, isSubmitting }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ note, image });
+    onSubmit({ note, image, eatenAt });
   };
 
   return (
@@ -29,6 +33,17 @@ const MarkEatenModal = ({ onClose, onSubmit, isSubmitting }) => {
         
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           
+          <div className="input-group">
+            <label>Thời gian ăn</label>
+            <input 
+              type="date" 
+              value={eatenAt}
+              onChange={(e) => setEatenAt(e.target.value)}
+              style={{ background: 'white', color: 'black' }}
+              required
+            />
+          </div>
+
           <div className="input-group">
             <label>Hình ảnh thực tế (Tùy chọn)</label>
             <input 

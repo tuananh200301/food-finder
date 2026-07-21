@@ -3,7 +3,7 @@ const { Op } = require('sequelize');
 
 exports.markAsEaten = async (req, res) => {
   try {
-    const { userId, foodId, restaurantId, note } = req.body;
+    const { userId, foodId, restaurantId, note, eatenAt } = req.body;
     
     if (!userId || !foodId || !restaurantId) {
       return res.status(400).json({ success: false, message: 'Missing required fields' });
@@ -14,13 +14,19 @@ exports.markAsEaten = async (req, res) => {
       imagePath = req.file.path;
     }
 
-    const newHistory = await EatHistory.create({
+    const createData = {
       userId,
       foodId,
       restaurantId,
       note,
       image: imagePath
-    });
+    };
+
+    if (eatenAt) {
+      createData.createdAt = new Date(eatenAt);
+    }
+
+    const newHistory = await EatHistory.create(createData);
 
     res.status(201).json({ success: true, data: newHistory });
   } catch (error) {
